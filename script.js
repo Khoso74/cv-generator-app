@@ -2,39 +2,26 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
   const form = document.getElementById("cvForm");
   const formData = new FormData(form);
 
-  // Create a custom styled CV layout
-  const cvHTML = `
-    <div style="font-family: Arial; padding: 30px; line-height: 1.6;">
-      <h1 style="text-align:center; color:#2c3e50;">${formData.get("name")}</h1>
-      <p style="text-align:center;">📧 ${formData.get("email")} | 📞 ${formData.get("phone")}</p>
-      <hr>
+  // Fill the hidden CV template with form data
+  document.getElementById("cvName").innerText = formData.get("name");
+  document.getElementById("cvContact").innerText = `📧 ${formData.get("email")} | 📞 ${formData.get("phone")}`;
+  document.getElementById("cvSummary").innerText = formData.get("summary");
+  document.getElementById("cvEducation").innerText = formData.get("education");
+  document.getElementById("cvExperience").innerText = formData.get("experience");
+  document.getElementById("cvSkills").innerText = formData.get("skills");
+  document.getElementById("cvCertifications").innerText = formData.get("certifications");
+  document.getElementById("cvInterests").innerText = formData.get("interests");
 
-      <h2 style="color:#34495e;">🔹 Summary</h2>
-      <p>${formData.get("summary")}</p>
+  // Get the styled CV layout
+  const cvLayout = document.getElementById("cvTemplate");
 
-      <h2 style="color:#34495e;">🎓 Education</h2>
-      <p>${formData.get("education")}</p>
-
-      <h2 style="color:#34495e;">💼 Experience</h2>
-      <p>${formData.get("experience")}</p>
-
-      <h2 style="color:#34495e;">🛠️ Skills</h2>
-      <p>${formData.get("skills")}</p>
-
-      <h2 style="color:#34495e;">📜 Certifications</h2>
-      <p>${formData.get("certifications")}</p>
-
-      <h2 style="color:#34495e;">🎯 Interests</h2>
-      <p>${formData.get("interests")}</p>
-    </div>
-  `;
-
+  // PDF generation settings
   const opt = {
-    margin: 0.5,
+    margin: [0.5, 0.5],
     filename: `${formData.get("name")}_CV.pdf`,
     html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().from(cvHTML).set(opt).save();
+  html2pdf().from(cvLayout).set(opt).save();
 });
