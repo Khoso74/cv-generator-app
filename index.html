@@ -47,7 +47,32 @@
     <button id="downloadPDF">Download CV (PDF)</button>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- ✅ Hidden CV Template for PDF -->
+  <div id="cvTemplate" style="display:none; width:800px; padding:40px; font-family: Arial, sans-serif; border:1px solid #ccc; background:#fff;">
+    <h1 id="cvName" style="text-align:center; margin-bottom: 0;">[NAME]</h1>
+    <p id="cvContact" style="text-align:center; color:gray; margin-top: 5px;">📧 [EMAIL] | 📞 [PHONE]</p>
+    <hr style="margin:20px 0;">
 
+    <h2 style="color:#2c3e50;">🔹 Summary</h2>
+    <p id="cvSummary"></p>
+
+    <h2 style="color:#2c3e50;">🎓 Education</h2>
+    <p id="cvEducation"></p>
+
+    <h2 style="color:#2c3e50;">💼 Experience</h2>
+    <p id="cvExperience"></p>
+
+    <h2 style="color:#2c3e50;">🛠 Skills</h2>
+    <p id="cvSkills"></p>
+
+    <h2 style="color:#2c3e50;">📜 Certifications</h2>
+    <p id="cvCertifications"></p>
+
+    <h2 style="color:#2c3e50;">🎯 Interests</h2>
+    <p id="cvInterests"></p>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
