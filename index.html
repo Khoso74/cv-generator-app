@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Professional CV Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      background: #fff;
+      margin: 40px auto;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #34495e;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .education-entry {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .education-entry input {
+      flex: 1;
+      min-width: 150px;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background-color: #3498db;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -16,15 +70,23 @@
       <input type="text" placeholder="Full Name" name="name" required />
       <input type="email" placeholder="Email" name="email" required />
       <input type="text" placeholder="Phone Number" name="phone" required />
-      
+
       <!-- Summary -->
       <h2>Summary</h2>
       <textarea name="summary" placeholder="Short professional summary..." required></textarea>
-      
-      <!-- Education -->
+
+      <!-- Education with Tabs -->
       <h2>Education</h2>
-      <textarea name="education" placeholder="Your education details..." required></textarea>
-      
+      <div id="educationSection">
+        <div class="education-entry">
+          <input type="text" name="degree[]" placeholder="Degree (e.g., B.A.)" required />
+          <input type="text" name="institution[]" placeholder="Institution" required />
+          <input type="text" name="year[]" placeholder="Year (e.g., 2020)" required />
+          <input type="text" name="grade[]" placeholder="Grade / Percentage" required />
+        </div>
+      </div>
+      <button type="button" class="btn" onclick="addEducation()">+ Add Another Degree</button>
+
       <!-- Experience -->
       <h2>Experience</h2>
       <textarea name="experience" placeholder="Your experience..." required></textarea>
@@ -41,23 +103,22 @@
       <h2>Interests</h2>
       <textarea name="interests" placeholder="Your interests..." required></textarea>
 
-      <button type="submit">Generate CV</button>
+      <button type="submit" class="btn">Generate CV</button>
     </form>
 
-    <button id="downloadPDF">Download CV (PDF)</button>
+    <button id="downloadPDF" class="btn">Download CV (PDF)</button>
   </div>
 
-  <!-- ✅ Hidden CV Template for PDF -->
   <div id="cvTemplate" style="display:none; width:800px; padding:40px; font-family: Arial, sans-serif; border:1px solid #ccc; background:#fff;">
-    <h1 id="cvName" style="text-align:center; margin-bottom: 0;">[NAME]</h1>
-    <p id="cvContact" style="text-align:center; color:gray; margin-top: 5px;">📧 [EMAIL] | 📞 [PHONE]</p>
+    <h1 id="cvName" style="text-align:center;">[NAME]</h1>
+    <p id="cvContact" style="text-align:center; color:gray;">[EMAIL] | [PHONE]</p>
     <hr style="margin:20px 0;">
 
     <h2 style="color:#2c3e50;">🔹 Summary</h2>
     <p id="cvSummary"></p>
 
     <h2 style="color:#2c3e50;">🎓 Education</h2>
-    <p id="cvEducation"></p>
+    <div id="cvEducation"></div>
 
     <h2 style="color:#2c3e50;">💼 Experience</h2>
     <p id="cvExperience"></p>
@@ -74,5 +135,19 @@
 
   <script src="script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    function addEducation() {
+      const section = document.getElementById('educationSection');
+      const entry = document.createElement('div');
+      entry.className = 'education-entry';
+      entry.innerHTML = `
+        <input type="text" name="degree[]" placeholder="Degree" required />
+        <input type="text" name="institution[]" placeholder="Institution" required />
+        <input type="text" name="year[]" placeholder="Year" required />
+        <input type="text" name="grade[]" placeholder="Grade / Percentage" required />
+      `;
+      section.appendChild(entry);
+    }
+  </script>
 </body>
 </html>
