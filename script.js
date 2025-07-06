@@ -39,6 +39,12 @@ function addSkill() {
   }
 }
 
+// 🟡 Rok do default submit behavior taake blank PDF na aaye
+document.getElementById("cvForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  document.getElementById("downloadPDF").click();
+});
+
 document.getElementById("downloadPDF").addEventListener("click", function () {
   const form = document.getElementById("cvForm");
   const formData = new FormData(form);
