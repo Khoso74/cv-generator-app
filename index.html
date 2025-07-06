@@ -1,1 +1,52 @@
-# cv-generator-app
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Professional CV Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Professional CV Generator</h1>
+    
+    <form id="cvForm">
+      <!-- Personal Info -->
+      <h2>Personal Info</h2>
+      <input type="text" placeholder="Full Name" name="name" required />
+      <input type="email" placeholder="Email" name="email" required />
+      <input type="text" placeholder="Phone Number" name="phone" required />
+      
+      <!-- Summary -->
+      <h2>Summary</h2>
+      <textarea name="summary" placeholder="Short professional summary..." required></textarea>
+      
+      <!-- Education -->
+      <h2>Education</h2>
+      <textarea name="education" placeholder="Your education details..." required></textarea>
+      
+      <!-- Experience -->
+      <h2>Experience</h2>
+      <textarea name="experience" placeholder="Your experience..." required></textarea>
+
+      <!-- Skills -->
+      <h2>Skills</h2>
+      <textarea name="skills" placeholder="List your skills..." required></textarea>
+
+      <!-- Certifications -->
+      <h2>Certifications</h2>
+      <textarea name="certifications" placeholder="Any certifications?" required></textarea>
+
+      <!-- Interests -->
+      <h2>Interests</h2>
+      <textarea name="interests" placeholder="Your interests..." required></textarea>
+
+      <button type="submit">Generate CV</button>
+    </form>
+
+    <button id="downloadPDF">Download CV (PDF)</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
