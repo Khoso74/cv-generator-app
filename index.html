@@ -4,65 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Professional CV Generator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 900px;
-      background: #fff;
-      margin: 40px auto;
-      padding: 30px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-radius: 12px;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    h2 {
-      margin-top: 30px;
-      color: #34495e;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .education-entry,
-    .experience-entry {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-    .education-entry input,
-    .experience-entry input,
-    .experience-entry textarea {
-      flex: 1;
-      min-width: 150px;
-    }
-    .btn {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #2980b9;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .btn:hover {
-      background-color: #3498db;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -82,7 +25,7 @@
         <div class="education-entry">
           <input type="text" name="degree[]" placeholder="Degree (e.g., B.A.)" required />
           <input type="text" name="institution[]" placeholder="Institution" required />
-          <input type="text" name="year[]" placeholder="Year (e.g., 2020)" required />
+          <input type="text" name="year[]" placeholder="Year" required />
           <input type="text" name="grade[]" placeholder="Grade / Percentage" required />
         </div>
       </div>
@@ -103,7 +46,7 @@
       <div id="skillsSection">
         <input type="text" id="skillInput" placeholder="Enter a skill and press Add" />
         <button type="button" class="btn" onclick="addSkill()">+ Add Skill</button>
-        <ul id="skillsList" style="list-style-type: disc; margin-top: 10px; padding-left: 20px;"></ul>
+        <ul id="skillsList"></ul>
       </div>
 
       <h2>Certifications</h2>
@@ -118,126 +61,7 @@
     <button id="downloadPDF" class="btn">Download CV (PDF)</button>
   </div>
 
-  <div id="cvTemplate" style="display:none; width:800px; padding:40px; font-family: Arial, sans-serif; border:1px solid #ccc; background:#fff;">
-    <h1 id="cvName" style="text-align:center;">[NAME]</h1>
-    <p id="cvContact" style="text-align:center; color:gray;">[EMAIL] | [PHONE]</p>
-    <hr style="margin:20px 0;">
-
-    <h2 style="color:#2c3e50;">🔹 Summary</h2>
-    <p id="cvSummary"></p>
-
-    <h2 style="color:#2c3e50;">🎓 Education</h2>
-    <ul id="cvEducation"></ul>
-
-    <h2 style="color:#2c3e50;">💼 Experience</h2>
-    <ul id="cvExperience"></ul>
-
-    <h2 style="color:#2c3e50;">🛠 Skills</h2>
-    <ul id="cvSkills"></ul>
-
-    <h2 style="color:#2c3e50;">📜 Certifications</h2>
-    <p id="cvCertifications"></p>
-
-    <h2 style="color:#2c3e50;">🎯 Interests</h2>
-    <p id="cvInterests"></p>
-  </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script>
-    let skillArray = [];
-
-    function addEducation() {
-      const section = document.getElementById('educationSection');
-      const entry = document.createElement('div');
-      entry.className = 'education-entry';
-      entry.innerHTML = `
-        <input type="text" name="degree[]" placeholder="Degree" required />
-        <input type="text" name="institution[]" placeholder="Institution" required />
-        <input type="text" name="year[]" placeholder="Year" required />
-        <input type="text" name="grade[]" placeholder="Grade / Percentage" required />
-      `;
-      section.appendChild(entry);
-    }
-
-    function addExperience() {
-      const section = document.getElementById('experienceSection');
-      const entry = document.createElement('div');
-      entry.className = 'experience-entry';
-      entry.innerHTML = `
-        <input type="text" name="jobTitle[]" placeholder="Job Title" required />
-        <input type="text" name="company[]" placeholder="Company Name" required />
-        <input type="text" name="duration[]" placeholder="Duration" required />
-        <textarea name="jobDesc[]" placeholder="Describe your responsibilities..." required></textarea>
-      `;
-      section.appendChild(entry);
-    }
-
-    function addSkill() {
-      const input = document.getElementById('skillInput');
-      const skill = input.value.trim();
-      if (skill !== "") {
-        skillArray.push(skill);
-        const list = document.getElementById('skillsList');
-        const li = document.createElement('li');
-        li.innerText = skill;
-        list.appendChild(li);
-        input.value = "";
-      }
-    }
-
-    document.getElementById("downloadPDF").addEventListener("click", function () {
-      const form = document.getElementById("cvForm");
-      const formData = new FormData(form);
-
-      document.getElementById("cvName").innerText = formData.get("name");
-      document.getElementById("cvContact").innerText = `📧 ${formData.get("email")} | 📞 ${formData.get("phone")}`;
-      document.getElementById("cvSummary").innerText = formData.get("summary");
-      document.getElementById("cvCertifications").innerText = formData.get("certifications");
-      document.getElementById("cvInterests").innerText = formData.get("interests");
-
-      // Education entries
-      const educationList = document.getElementById("cvEducation");
-      educationList.innerHTML = "";
-      const degrees = formData.getAll("degree[]");
-      const institutions = formData.getAll("institution[]");
-      const years = formData.getAll("year[]");
-      const grades = formData.getAll("grade[]");
-      degrees.forEach((deg, i) => {
-        const li = document.createElement("li");
-        li.textContent = `${deg} - ${institutions[i]} (${years[i]}) - Grade: ${grades[i]}`;
-        educationList.appendChild(li);
-      });
-
-      // Experience entries
-      const expList = document.getElementById("cvExperience");
-      expList.innerHTML = "";
-      const jobs = formData.getAll("jobTitle[]");
-      const comps = formData.getAll("company[]");
-      const durs = formData.getAll("duration[]");
-      const descs = formData.getAll("jobDesc[]");
-      jobs.forEach((job, i) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>${job}</strong> at ${comps[i]} (${durs[i]})<br>${descs[i]}`;
-        expList.appendChild(li);
-      });
-
-      // Skills
-      const skillList = document.getElementById("cvSkills");
-      skillList.innerHTML = "";
-      skillArray.forEach(skill => {
-        const li = document.createElement("li");
-        li.textContent = skill;
-        skillList.appendChild(li);
-      });
-
-      const cvLayout = document.getElementById("cvTemplate");
-      html2pdf().from(cvLayout).set({
-        margin: [0.5, 0.5],
-        filename: `${formData.get("name")}_CV.pdf`,
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-      }).save();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
